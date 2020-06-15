@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-42711199-5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-42711199-5');
+        </script>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <title>Slowing Down the Weight Norm Increase in Momentum-based Optimizers</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">AdamP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="https://github.com/clovaai/adamp">Github</a>
+                    <a class="nav-item nav-link">ArXiv</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="mx-auto text-center mt-5 mb-3">
+                <h2>Slowing Down the Weight Norm Increase in Momentum-based Optimizers</h2>
+                <p class="lead"><a href="https://sites.google.com/view/byeongho-heo/home">Byeongho Heo<sup>&#10033;</sup></a>, <a href="https://sanghyukchun.github.io/home/">Sanghyuk Chun<sup>&#10033;</sup></a>, <a href="https://seongjoonoh.com/">Seong Joon Oh</a>, <a href="https://sites.google.com/site/dyhan0920/">Dongyoon Han</a>, <a href="https://sangdooyun.github.io/">Sangdoo Yun</a>, <a href="https://sites.google.com/site/youngjunguh">Youngjung Uh</a>, <a href="https://scholar.google.com/citations?user=eGj3ay4AAAAJ&hl=ko">Jung-Woo Ha</a></p>
+                <p>&#10033; indicates equal contribution</p>
+                <p class="lead">Clova AI Research, NAVER Corp.</p>
+                <p><a>[paper (TBA)]</a> <a href="https://github.com/clovaai/adamp">[code]</a></p>
+            </div>
+
+            <div class="mx-auto text-center mt-5 mb-5">
+                <h4 class="mb-3">Summary</h4>
+                <ul class="text-justify">
+                    <li>Widely-used normalization techniques in deep networks result in the scale invariance for weights. We show that momentum-based optimizers, when applied on such scale-invariant parameters, result in an excessive growth of weight norms during training.</li>
+                    <li>This is problematic because the effective optimization step sizes are inversely proportional to the weight norm; the premature decay of effective step sizes may lead to sub-optimal model performances.</li>
+                    <li>We propose a projection-based solution that regularizes the momentum-induced norm growth and improves model performances. The proposed method is readily adaptable to existing gradient-based optimization algorithms like SGD and Adam. We named their modifications as SGDP and AdamP, respectively.</li>
+                    <li>A wide set of experiments, including ImageNet classification, MS-COCO object detection, adversarial training, cross-bias generalization, audio classification tasks, and image retrieval tasks, shows the versatility and effectiveness of our method.</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="mx-auto text-center mt-5 mb-3">
+                <h3 class="mb-5">Problem: Momentum induces an excessive growth of weight norms</h3>
+                <h5>2D Toy example</h5>
+                <p class="text-justify">Below, we illustrate how the <strong><span class="text-warning">momentum-SGD</span></strong> drastically boost up the increase in the weight norms comparing to <strong><span class="text-danger">momentum-less SGD</span></strong> and <strong><span class="text-success">SGDP (ours)</span></strong>. First, we simulate three different opimizers on 2D Toy example: \( \min_w -\frac{w}{\| w \|_2} \cdot \frac{w^*}{\| w^* \|_2} \) where w and w<sup>*</sup> are 2-dimensional vectors. The problem is identical to maximize the cosine similarity between two vectors. Note that the optimal w is not unique, \(c w^*, c > 0\). In the following videos, we observe that the <strong><span class="text-warning">momentum-SGD</span></strong> shows fast initial update speed, but also very fast norm increases (from 1 to 2.93 in the momentum 0.9 scenario, and from 1 to 27.87 in the momentum 0.99 scenario), resulting in a slower convergence speed. Note that a larger momentum induces a faster norm increases. <strong><span class="text-danger">Vanilla SGD</span></strong> shows very slow initial step size, and reasonable convergence speed at the late training phase. On the other hand, <strong><span class="text-success">SGDP (ours)</span></strong> shows very rapid convergence speed, and preventing the excessive norm growth, resulting in the fastest convergence.</p>
+            </div>
+
+            <div class="row mx-auto text-center mt-5 mb-3">
+                <div class="col-sm-12 col-md-4">
+                    <h5>Momentum = 0.9</h5>
+                    <video width="100%" src="static/img/momentum90.mp4" type="video/mp4" autoplay muted loop>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <h5>Momentum = 0.95</h5>
+                    <video width="100%" src="static/img/momentum95.mp4" type="video/mp4" autoplay muted loop>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <h5>Momentum = 0.99</h5>
+                    <video width="100%" src="static/img/momentum99.mp4" type="video/mp4" autoplay muted loop>
+                </div>
+            </div>
+
+            <div class="mx-auto text-center">
+                <h5>Empirical analysis of SGD variants on ImageNet</h5>
+                <p class="text-justify">We train ResNet18 on ImageNet with <strong><span class="text-danger">vanilla SGD</span></strong>, <strong><span class="text-warning">momentum SGD</span></strong>, and <strong><span class="text-success">SGDP (ours)</span></strong>. We measure the average L2 norm of the weights, average effective step sizes, and accuracies at every epoch. The step decay learning rate scheduling is used: multiply with factor 0.1 at every 30 epochs. Compared to <strong><span class="text-danger">vanilla SGD</span></strong>, <strong><span class="text-warning">momentum SGD</span></strong> exhibits a steep increase in \( \| w \|_2 \), resulting in a quick drop in the effective step sizes. <strong><span class="text-success">SGDP (ours)</span></strong>, on the other hand, does not allow the norm to increase far beyond the level of <strong><span class="text-danger">vanilla SGD</span></strong>. It maintains the effective step size at a comparable magnitude as the <strong><span class="text-danger">vanilla SGD</span></strong> does. Final performances reflect the benefit of the regularized norm growths. While <strong><span class="text-warning">momentum</span></strong> itself is a crucial ingredient for improved model performances, further gain is possible by regularizing the norm growth (<strong><span class="text-warning">momentum SGD</span></strong>: 66.6% accuracy, <strong><span class="text-success">SGDP (ours)</span></strong>: 69.0% accuracy). <strong><span class="text-success">SGDP (ours)</span></strong> fully realizes the performance gain from the momentum by not overly suppressing the effective step sizes.</p>
+            </div>
+            <div class="row mx-auto text-center mt-5 mb-3">
+                <div class="col-sm-12 col-md-4">
+                    <h5>Weight norms</h5>
+                    <img style="width: 100%;" src="static/img/problem_norm.svg">
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <h5>Effective step sizes</h5>
+                    <img style="width: 100%;" src="static/img/problem_effective_step_size.svg">
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <h5>Accuracies</h5>
+                    <img style="width: 100%;" src="static/img/problem_accuracy.svg">
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="mx-auto text-center mt-5 mb-5">
+                <h3 class="mb-5">Algorithm</h3>
+                <p class="text-justify">We propose a simple and effective solution: at each iteration of momentum-based GD optimizers (e.g. SGD or Adam) applied on scale-invariant weights (e.g. Conv weights preceding a BN layer), we remove the radial component (i.e. parallel to the weight vector) from the update vector (See the below figure). Intuitively, this operation prevents the unnecessary update along the radial direction that only increases the weight norm without contributing to the loss minimization. The proposed method is readily adaptable to existing gradient-based optimization algorithms like SGD and Adam. Their modifications, SGDP and AdamP are shown in the below figures. (Modifications are <strong><span style="color: #008080">colorized</span></strong>).</p>
+                <img style="max-width: 380px; width: 100%;" src="static/img/projection.svg">
+                <img style="max-width: 700px; width: 100%;" src="static/img/algorithms.svg">
+            </div>
+
+            <hr>
+
+            <div class="mx-auto text-center mt-5 mb-3">
+                <h3 class="mb-5">Experimental results</h3>
+                <p class="text-justify mb-5">We experiment over various real-world tasks and datasets. From the image domain, we show results on ImageNet classification, object detection, and robustness benchmarks. From the audio domain, we study music tagging, speech recognition, and sound event detection. Finally, the metric learning experiments with l2 normalized embeddings show that our method works also on the scale invariances that do not originate from the statistical normalization. In the above set of experiments, we show that the proposed modifications (SGDP and AdamP) bring consistent performance gains against the baselines (SGD and Adam).</p>
+
+                <p><strong>ImageNet classification.</strong> Accuracies of state-of-the-art networks (<a href="https://arxiv.org/abs/1801.04381">MobileNetV2</a>, <a href="https://arxiv.org/abs/1512.03385">ResNet</a>, and <a href="https://arxiv.org/abs/1905.04899">CutMix-ed ResNet</a>) trained with SGDP and AdamP.</p>
+                <img style="max-width: 720px; width: 100%;" src="static/img/table01.svg">
+
+                <p class="mt-5"><strong>MS-COCO object detection.</strong> Average precision (AP) scores of <a href="https://arxiv.org/abs/1904.07850">CenterNet</a> and <a href="https://arxiv.org/abs/1512.02325">SSD</a> trained with Adam and AdamP optimizers.</p>
+                <img style="max-width: 425px; width: 100%;" src="static/img/table03.svg">
+
+                <p class="mt-5"><strong>Adversarial training.</strong> Standard accuracies and attacked accuracies of <a href="https://github.com/louis2889184/pytorch-adversarial-training">Wide-ResNet trained on CIFAR-10 with PGD-10 attacks</a>.</p>
+                <img style="max-width: 585px; width: 100%;" src="static/img/table04_0.svg">
+
+                <p class="mt-5"><strong>Robustness against real-world biases (Biased-MNIST).</strong> Unbiased accuraccy with <a href="https://arxiv.org/abs/1910.02806">ReBias</a>.</p>
+                <img style="max-width: 800px; width: 100%;" src="static/img/table04_1.svg">
+
+                <p class="mt-5"><strong>Robustness against real-world biases (9-Class ImageNet).</strong> Biased / unbiased / <a href="https://arxiv.org/abs/1907.07174">ImageNet-A</a> accuraccy with <a href="https://arxiv.org/abs/1910.02806">ReBias</a>.</p>
+                <img style="max-width: 650px; width: 100%;" src="static/img/table04_2.svg">
+
+                <p class="mt-5"><strong>Audio classification.</strong> Results on three audio classification tasks with <a href="https://ccrma.stanford.edu/~urinieto/MARL/publications/ICASSP2020_Won.pdf">Harmonic CNN</a>.</p>
+                <img style="max-width: 800px; width: 100%;" src="static/img/table05.svg">
+
+                <p class="mt-5"><strong>Image retrieval.</strong> Recall@1 on CUB, Cars-196, InShop, and SOP datasets. ImageNet-pretrained ResNet50 networks are fine-tuned by the triplet (semi-hard mining) and the <a href="https://arxiv.org/abs/2003.13911">ProxyAnchor (PA) loss</a>.</p>
+                <img class="mb-4" style="max-width: 500px; width: 100%;" src="static/img/table06.svg">
+            </div>
+
+            <hr>
+
+            <div class="mx-auto text-center mt-5 mb-3">
+                <h3>Citation</h3>
+            </div>
+            <div class="mb-5" style="background-color: #f7f7f9; padding: 1em;">
+                TBA.
+                <!--<pre style="margin: 0;"><code>@article{heo2020adamp,-->
+    <!--title={Slowing Down the Weight Norm Increase in Momentum-based Optimizers},-->
+    <!--author={Heo, Byeongho and Chun, Sanghyuk and Oh, Seong Joon and Han, Dongyoon and Yun, Sangdoo and Uh, Youngjung and Ha, Jung-Woo},-->
+    <!--year={2020},-->
+    <!--journal={arXiv preprint arXiv:2006.xxxxx},-->
+<!--}</code></pre></div>-->
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <!-- mathjax -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>
