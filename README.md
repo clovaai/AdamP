@@ -17,16 +17,28 @@ Please visit our [project page](https://clovaai.github.io/AdamP/).
 
 ## Getting Started
 
+### Installation
+
+```
+pip3 install adamp
+```
+
+### Usage
+
 Usage is exactly same as [torch.optim](https://pytorch.org/docs/stable/optim.html) library!
 
 ```python
 from adamp import AdamP
-optimizer = AdamP(lr=0.001, betas=(0.9, 0.999), weight_decay=1e-2)
+
+# define your params
+optimizer = AdamP(params, lr=0.001, betas=(0.9, 0.999), weight_decay=1e-2)
 ```
 
 ```python
 from sgdp import SGDP
-optimizer = SGDP(lr=0.1, weight_decay=1e-5, momentum=0.9, nesterov=True)
+
+# define your params
+optimizer = SGDP(params, lr=0.1, weight_decay=1e-5, momentum=0.9, nesterov=True)
 ```
 
 ## Arguments
