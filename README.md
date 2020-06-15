@@ -1,6 +1,6 @@
 ## Slowing Down the Weight Norm Increase in Momentum-based Optimizers
 
-Official PyTorch implementation of AdamP and SGDP optimizers | [Paper]() | [Project page]()
+Official PyTorch implementation of AdamP and SGDP optimizers | [Paper (TBA)] | [Project page](https://clovaai.github.io/AdamP/)
 
 **Byeongho Heo<sup>\*</sup>, Sanghyuk Chun<sup>\*</sup>, Seong Joon Oh, Dongyoon Han, Sangdoo Yun, Youngjung Uh, Jung-Woo Ha.** <br>
 <sub>\* indicates equal contribution</sub>
@@ -13,7 +13,7 @@ Normalization techniques, such as batch normalization (BN), have led to signific
 
 ## How does it work?
 
-Please visit our [project page]().
+Please visit our [project page](https://clovaai.github.io/AdamP/).
 
 ## Getting Started
 
@@ -64,10 +64,5 @@ THE SOFTWARE.
 ## How to cite
 
 ```
-@article{heo2020adamp,
-    title={Slowing Down the Weight Norm Increase in Momentum-based Optimizers},
-    author={Heo, Byeongho and Chun, Sanghyuk and Oh, Seong Joon and Han, Dongyoon and Yun, Sangdoo and Uh, Youngjung and Ha, Jung-Woo
-    year={2020},
-    journal={arXiv preprint arXiv:2006.xxxxx},
-}
+TBA.
 ```
