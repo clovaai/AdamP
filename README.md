@@ -45,7 +45,7 @@ optimizer = SGDP(params, lr=0.1, weight_decay=1e-5, momentum=0.9, nesterov=True)
 `SGDP` and `AdamP` share arguments with [torch.optim.SGD](https://pytorch.org/docs/stable/optim.html#torch.optim.SGD) and [torch.optim.Adam](https://pytorch.org/docs/stable/optim.html#torch.optim.Adam).
 There are two additional hyperparameters; we recommend using the default values.
 - `delta` : threhold that determines whether a set of parameters is scale invariant or not (default: 0.1)
-- `wd_raito` : relative weight decay applied on _scale-invariant_ parameters compared to that applied on _scale-variant_ parameters (default: 0.1)
+- `wd_ratio` : relative weight decay applied on _scale-invariant_ parameters compared to that applied on _scale-variant_ parameters (default: 0.1)
 
 ## License
 
