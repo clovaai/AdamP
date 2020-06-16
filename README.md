@@ -35,7 +35,7 @@ optimizer = AdamP(params, lr=0.001, betas=(0.9, 0.999), weight_decay=1e-2)
 ```
 
 ```python
-from sgdp import SGDP
+from adamp import SGDP
 
 # define your params
 optimizer = SGDP(params, lr=0.1, weight_decay=1e-5, momentum=0.9, nesterov=True)
