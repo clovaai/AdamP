@@ -47,6 +47,9 @@ There are two additional hyperparameters; we recommend using the default values.
 - `delta` : threhold that determines whether a set of parameters is scale invariant or not (default: 0.1)
 - `wd_ratio` : relative weight decay applied on _scale-invariant_ parameters compared to that applied on _scale-variant_ parameters (default: 0.1)
 
+Both `SGDP` and `AdamP` support Nesterov momentum.
+- `nesterov` : enables Nesterov momentum (default: False)
+
 ## License
 
 This project is distributed under MIT license.
