@@ -17,7 +17,7 @@ Please visit our [project page](https://clovaai.github.io/AdamP/).
 
 ## Updates
 
-- **Jun 19, 2020**: nestrov update (v1.1.0)
+- **Jun 19, 2020**: nesterov update (v1.1.0)
 - **Jun 15, 2020**: Initial upload (v1.0.0)
 
 ## Getting Started
