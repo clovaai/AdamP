@@ -17,7 +17,7 @@ Please visit our [project page](https://clovaai.github.io/AdamP/).
 
 ## Updates
 
-- **Jun 19, 2020**: built-in cosine similarity and fix warning (v0.3.0)
+- **Aug 27, 2020**: built-in cosine similarity and fix warning (v0.3.0)
 - **Jun 19, 2020**: nesterov update (v0.2.0)
 - **Jun 15, 2020**: Initial upload (v0.1.0)
 
