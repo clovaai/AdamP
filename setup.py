@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='adamp',
-    version='0.1.0',
+    version='0.3.0',
     author='NAVER Corp.',
     description='AdamP optimizer: Slowing Down the Weight Norm Increase in Momentum-based Optimizers',
     long_description=long_description,
