@@ -6,6 +6,7 @@ MIT license
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.optim.optimizer import Optimizer, required
 import math
 
@@ -26,11 +27,7 @@ class SGDP(Optimizer):
         x = view_func(x)
         y = view_func(y)
 
-        x_norm = x.norm(dim=1).add_(eps)
-        y_norm = y.norm(dim=1).add_(eps)
-        dot = (x * y).sum(dim=1)
-
-        return dot.abs() / x_norm / y_norm
+        return F.cosine_similarity(x, y, dim=1, eps=eps).abs_()
 
     def _projection(self, p, grad, perturb, delta, wd_ratio, eps):
         wd = 1
@@ -54,7 +51,6 @@ class SGDP(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            weight_decay = group['weight_decay']
             momentum = group['momentum']
             dampening = group['dampening']
             nesterov = group['nesterov']
@@ -71,7 +67,7 @@ class SGDP(Optimizer):
 
                 # SGD
                 buf = state['momentum']
-                buf.mul_(momentum).add_(1 - dampening, grad)
+                buf.mul_(momentum).add_(grad, alpha=1 - dampening)
                 if nesterov:
                     d_p = grad + momentum * buf
                 else:
@@ -83,10 +79,10 @@ class SGDP(Optimizer):
                     d_p, wd_ratio = self._projection(p, grad, d_p, group['delta'], group['wd_ratio'], group['eps'])
 
                 # Weight decay
-                if weight_decay != 0:
+                if group['weight_decay'] > 0:
                     p.data.mul_(1 - group['lr'] * group['weight_decay'] * wd_ratio / (1-momentum))
 
                 # Step
-                p.data.add_(-group['lr'], d_p)
+                p.data.add_(d_p, alpha=-group['lr'])
 
         return loss

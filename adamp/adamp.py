@@ -6,6 +6,7 @@ MIT license
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.optim.optimizer import Optimizer, required
 import math
 
@@ -26,11 +27,7 @@ class AdamP(Optimizer):
         x = view_func(x)
         y = view_func(y)
 
-        x_norm = x.norm(dim=1).add_(eps)
-        y_norm = y.norm(dim=1).add_(eps)
-        dot = (x * y).sum(dim=1)
-
-        return dot.abs() / x_norm / y_norm
+        return F.cosine_similarity(x, y, dim=1, eps=eps).abs_()
 
     def _projection(self, p, grad, perturb, delta, wd_ratio, eps):
         wd = 1
@@ -77,8 +74,8 @@ class AdamP(Optimizer):
                 bias_correction1 = 1 - beta1 ** state['step']
                 bias_correction2 = 1 - beta2 ** state['step']
 
-                exp_avg.mul_(beta1).add_(1 - beta1, grad)
-                exp_avg_sq.mul_(beta2).addcmul_(1 - beta2, grad, grad)
+                exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
+                exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
 
                 denom = (exp_avg_sq.sqrt() / math.sqrt(bias_correction2)).add_(group['eps'])
                 step_size = group['lr'] / bias_correction1
@@ -98,6 +95,6 @@ class AdamP(Optimizer):
                     p.data.mul_(1 - group['lr'] * group['weight_decay'] * wd_ratio)
 
                 # Step
-                p.data.add_(-step_size, perturb)
+                p.data.add_(perturb, alpha=-step_size)
 
         return loss
