@@ -86,8 +86,8 @@ THE SOFTWARE.
 
 ```
 @article{heo2020adamp,
-    title={Slowing Down the Weight Norm Increase in Momentum-based Optimizers},
-    author={Heo, Byeongho and Chun, Sanghyuk and Oh, Seong Joon and Han, Dongyoon and Yun, Sangdoo and Uh, Youngjung and Ha, Jung-Woo},
+    title={AdamP: Slowing Down the Slowdown for Momentum Optimizers on Scale-invariant Weights},
+    author={Heo, Byeongho and Chun, Sanghyuk and Oh, Seong Joon and Han, Dongyoon and Yun, Sangdoo and Kim, Gyuwan and Uh, Youngjung and Ha, Jung-Woo},
     year={2020},
     journal={arXiv preprint arXiv:2006.08217},
 }
