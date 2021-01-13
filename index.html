@@ -76,6 +76,26 @@
             </div>
 
             <div class="mx-auto text-center">
+                <h5>3D Toy example</h5>
+                <p class="text-justify">We employ 3D Rosenbrock function, defined on hemisphere, by adding a redundant radial axis r. In the below figure, we compare the trajectories for optimizers on the spherical coordinates. We compare the baseline <strong><span class="text-warning">momentum gradient descent optimizer (GD)</span></strong> and <strong><span class="text-success">our projection solution</span></strong>. We additionally examine the impact of <strong><span class="text-danger">weight decay (WD)</span></strong>, since a careful choice of WD is another way to regularize the norm growth. We observe that the momentum GD does not converge sufficiently to the optimum. The slowdown is explained by the decreased effective step sizes. Careful tuning of WD partially addresses the slow convergence (momentum GD + WD trajectory) by regularizing the norm growth, but WD is still unable to preclude the initial surge in the weight norm. In practice, addressing the problem with WD is even less attractive because WD is often a sensitive hyperparameter. On the other hand, our projection solution successfully subdues the weight norm growth, ensuring undiminished effective step sizes and a faster convergence to the optimum.</p>
+            </div>
+
+            <div class="row mx-auto text-center mt-5 mb-3">
+                <div class="col-sm-12 col-md-4">
+                    <h5>GD without weight decay (WD)</h5>
+                    <img style="width: 100%;" src="static/img/sgd_3d_toy.svg">
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <h5>GD with WD</h5>
+                    <img style="width: 100%;" src="static/img/sgd_wd_3d_toy.svg">
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <h5>GD + projection (ours) without WD</h5>
+                    <img style="width: 100%;" src="static/img/sgdp_3d_toy.svg">
+                </div>
+            </div>
+
+            <div class="mx-auto text-center">
                 <h5>Empirical analysis of SGD variants on ImageNet</h5>
                 <p class="text-justify">We train ResNet18 on ImageNet with <strong><span class="text-danger">vanilla SGD</span></strong>, <strong><span class="text-warning">momentum SGD</span></strong>, and <strong><span class="text-success">SGDP (ours)</span></strong>. We measure the average L2 norm of the weights, average effective step sizes, and accuracies at every epoch. The step decay learning rate scheduling is used: multiply with factor 0.1 at every 30 epochs. Compared to <strong><span class="text-danger">vanilla SGD</span></strong>, <strong><span class="text-warning">momentum SGD</span></strong> exhibits a steep increase in \( \| w \|_2 \), resulting in a quick drop in the effective step sizes. <strong><span class="text-success">SGDP (ours)</span></strong>, on the other hand, does not allow the norm to increase far beyond the level of <strong><span class="text-danger">vanilla SGD</span></strong>. It maintains the effective step size at a comparable magnitude as the <strong><span class="text-danger">vanilla SGD</span></strong> does. Final performances reflect the benefit of the regularized norm growths. While <strong><span class="text-warning">momentum</span></strong> itself is a crucial ingredient for improved model performances, further gain is possible by regularizing the norm growth (<strong><span class="text-warning">momentum SGD</span></strong>: 66.6% accuracy, <strong><span class="text-success">SGDP (ours)</span></strong>: 69.0% accuracy). <strong><span class="text-success">SGDP (ours)</span></strong> fully realizes the performance gain from the momentum by not overly suppressing the effective step sizes.</p>
             </div>
@@ -128,7 +148,10 @@
                 <img style="max-width: 800px; width: 100%;" src="static/img/table05.svg">
 
                 <p class="mt-5"><strong>Image retrieval.</strong> Recall@1 on CUB, Cars-196, InShop, and SOP datasets. ImageNet-pretrained ResNet50 networks are fine-tuned by the triplet (semi-hard mining) and the <a href="https://arxiv.org/abs/2003.13911">ProxyAnchor (PA) loss</a>.</p>
-                <img class="mb-4" style="max-width: 500px; width: 100%;" src="static/img/table06.svg">
+                <img style="max-width: 500px; width: 100%;" src="static/img/table06.svg">
+
+                <p class="mt-5"><strong>Language Modeling.</strong> Perplexity on WikiText103. Lower is better.</p>
+                <img class="mb-4" style="max-width: 450px; width: 100%;" src="static/img/table07.svg">
             </div>
 
             <hr>
@@ -137,11 +160,11 @@
                 <h3>Citation</h3>
             </div>
             <div class="mb-5" style="background-color: #f7f7f9; padding: 1em;">
-                <pre style="margin: 0;"><code>@article{heo2020adamp,
+                <pre style="margin: 0;"><code>@inproceedings{heo2021adamp,
     title={AdamP: Slowing Down the Slowdown for Momentum Optimizers on Scale-invariant Weights},
     author={Heo, Byeongho and Chun, Sanghyuk and Oh, Seong Joon and Han, Dongyoon and Yun, Sangdoo and Kim, Gyuwan and Uh, Youngjung and Ha, Jung-Woo},
-    year={2020},
-    journal={arXiv preprint arXiv:2006.08217},
+    year={2021},
+    booktitle={International Conference on Learning Representations (ICLR)},
 }</code></pre></div>
         </div>
 
