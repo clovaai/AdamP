@@ -1,4 +1,4 @@
-## AdamP: Slowing Down the Slowdown for Momentum Optimizers on Scale-invariant Weights
+## AdamP: Slowing Down the Slowdown for Momentum Optimizers on Scale-invariant Weights (ICLR 2021)
 
 Official PyTorch implementation of AdamP and SGDP optimizers | [Paper](https://arxiv.org/abs/2006.08217) | [Project page](https://clovaai.github.io/AdamP/)
 
@@ -85,10 +85,10 @@ THE SOFTWARE.
 ## How to cite
 
 ```
-@article{heo2020adamp,
+@inproceedings{heo2021adamp,
     title={AdamP: Slowing Down the Slowdown for Momentum Optimizers on Scale-invariant Weights},
     author={Heo, Byeongho and Chun, Sanghyuk and Oh, Seong Joon and Han, Dongyoon and Yun, Sangdoo and Kim, Gyuwan and Uh, Youngjung and Ha, Jung-Woo},
-    year={2020},
-    journal={arXiv preprint arXiv:2006.08217},
+    year={2021},
+    booktitle={International Conference on Learning Representations (ICLR)},
 }
 ```
